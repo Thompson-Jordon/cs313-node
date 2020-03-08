@@ -1,16 +1,22 @@
 const cool = require("cool-ascii-faces");
 const express = require("express");
+const bodyParser = require("body-parser");
+let postal = require("./modules/postal");
 const path = require("path");
 const PORT = process.env.PORT || 5000;
+let app = express();
 
-express()
-  .use(express.static(path.join(__dirname, "public")))
-  .set("views", path.join(__dirname, "views"))
-  .set("view engine", "ejs")
-  .get("/", (req, res) => res.render("pages/index"))
-  .get("/cool", (req, res) => res.send(cool()))
-  .get("/times", (req, res) => res.send(showTimes()))
-  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use(express.static(path.join(__dirname, "public")));
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+app.get("/", (req, res) => res.render("pages/index"));
+app.post("/rates", postal.displayRates);
+app.get("/cool", (req, res) => res.send(cool()));
+app.get("/times", (req, res) => res.send(showTimes()));
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 showTimes = () => {
   let result = "";
