@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const cool = require("cool-ascii-faces");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -7,17 +7,17 @@ const path = require("path");
 const PORT = process.env.PORT || 5000;
 let app = express();
 
-const connectionString = process.env.DATABASE_URL;
-const { Pool } = require("pg");
-const pool = new Pool({ connectionString: connectionString });
-let sql = "SELECT * FROM device_type";
-pool.query(sql, function(err, res) {
-  if (err) {
-    console.log(`Error in query: ${err}`);
-  }
+// const connectionString = process.env.DATABASE_URL;
+// const connectionString = process.env.LOCALDB_URL;
 
-  console.log("Back from DB with result: " + JSON.parse(res.rows));
-});
+// const { Pool } = require("pg");
+// const pool = new Pool({ connectionString: connectionString });
+
+let teach10 = require('./modules/teach10');
+app.get("/person", teach10.getPersons);
+app.get("/getParents", teach10.getParents);
+app.get("/getChildren", teach10.getChildren);
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
