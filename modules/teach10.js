@@ -1,4 +1,4 @@
-const connectionString = process.env.LOCALDB_URL;
+const connectionString = process.env.DATABASE_URL || process.env.LOCALDB_URL;
 
 const { Pool } = require("pg");
 const pool = new Pool({ connectionString: connectionString });
