@@ -1,3 +1,4 @@
+require('dotenv').config();
 const cool = require("cool-ascii-faces");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -7,11 +8,12 @@ const PORT = process.env.PORT || 5000;
 let app = express();
 
 // db var
-const connetionString = (process.env.DATABASE_URL =
-"postgres://fptlqtvhqpgabu:ef909df9489569745f9c38dc3d3ce4f6da78649ad4079d068f0355d2391e5086@ec2-18-235-20-228.compute-1.amazonaws.com:5432/d3agrdaabfcv81?ssl=true");
-// const connetionString = "postgres://postgres:password@localhost:5432/workorder";
+// const connectionString = (process.env.DATABASE_URL =
+// "postgres://fptlqtvhqpgabu:ef909df9489569745f9c38dc3d3ce4f6da78649ad4079d068f0355d2391e5086@ec2-18-235-20-228.compute-1.amazonaws.com:5432/d3agrdaabfcv81?ssl=true");
+// const testConnection = "postgres://postgres:password@localhost:5432/workorder";
+const connectionString = process.env.DATABASE_URL;
 const { Pool } = require("pg");
-const pool = new Pool({ connetionString: connetionString });
+const pool = new Pool({ connectionString: connectionString });
 let sql = "SELECT * FROM device_type";
 pool.query(sql, function(err, res) {
   if (err) {
