@@ -16,7 +16,7 @@ pool.query(sql, function(err, res) {
     console.log(`Error in query: ${err}`);
   }
 
-  console.log("Back from DB with result: " + res.rows);
+  console.log("Back from DB with result: " + JSON.parse(res.rows));
 });
 
 app.use(bodyParser.urlencoded({ extended: false }));
