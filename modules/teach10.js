@@ -11,8 +11,8 @@ exports.getPersons = (req, res) => {
     'SELECT first_name, last_name, date_of_birth FROM persons WHERE id=$1::int';
   const values = [personID];
   pool.query(sql, values, function(err, result) {
-    if (err) {
-      console.log(`Error in query: ${err}`);
+    if (err || result == null || result.length != 1) {
+        res.status(500).json({ success: false, data: err });
     }
     //  let person = result.rows;
 
