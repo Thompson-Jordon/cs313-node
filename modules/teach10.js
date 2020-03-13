@@ -58,7 +58,7 @@ exports.getParents = (req, response) => {
 function getPersonFromDb(id, callback) {
   console.log("getPersonFromDB called with id:", id);
 
-  let sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
+  let sql = "SELECT * FROM device_type WHERE id = $1::int";
   let params = [id];
 
   pool.query(sql, params, function(err, result) {
