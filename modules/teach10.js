@@ -5,10 +5,10 @@ const pool = new Pool({ connectionString: connectionString });
 
 exports.getPersons = (req, response) => {
    personID = req.query.id;
-   response.setHeader("Content-Type", "application/json");
+  console.log("Looking for id:", id);
    
    const sql =
-     "SELECT first_name, last_name, date_of_birth FROM persons p WHERE id = $1";
+     "SELECT first_name, last_name, date_of_birth FROM persons WHERE id = $1";
    const values = [personID];
    pool.query(sql, values, function(err, res) {
      if (err) {

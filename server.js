@@ -1,5 +1,4 @@
 require("dotenv").config();
-const cool = require("cool-ascii-faces");
 const express = require("express");
 const bodyParser = require("body-parser");
 let postal = require("./modules/postal");
@@ -7,14 +6,13 @@ const path = require("path");
 const PORT = process.env.PORT || 5000;
 let app = express();
 
-// const connectionString = process.env.DATABASE_URL;
-// const connectionString = process.env.LOCALDB_URL;
+const connectionString = process.env.DATABASE_URL || process.env.LOCALDB_URL;
 
-// const { Pool } = require("pg");
-// const pool = new Pool({ connectionString: connectionString });
+const { Pool } = require("pg");
+const pool = new Pool({ connectionString: connectionString });
 
 let teach10 = require('./modules/teach10');
-app.get("/person", teach10.getPersons);
+app.get("/getPerson", teach10.getPersons);
 app.get("/getParents", teach10.getParents);
 app.get("/getChildren", teach10.getChildren);
 
