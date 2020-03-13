@@ -5,7 +5,7 @@ const pool = new Pool({ connectionString: connectionString });
 
 exports.getPersons = (req, res) => {
   let personID = req.query.id;
-  console.log("Looking for id:", id);
+  console.log("Looking for id:", personID);
 
   const sql =
     'SELECT first_name, last_name, date_of_birth FROM persons WHERE id=$1::int';

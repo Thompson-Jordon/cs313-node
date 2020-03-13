@@ -6,10 +6,10 @@ const path = require("path");
 const PORT = process.env.PORT || 5000;
 let app = express();
 
-const connectionString = process.env.DATABASE_URL || process.env.LOCALDB_URL;
+// const connectionString = process.env.DATABASE_URL || process.env.LOCALDB_URL;
 
-const { Pool } = require("pg");
-const pool = new Pool({ connectionString: connectionString });
+// const { Pool } = require("pg");
+// const pool = new Pool({ connectionString: connectionString });
 
 let teach10 = require('./modules/teach10');
 app.get("/getPerson", teach10.getPersons);
