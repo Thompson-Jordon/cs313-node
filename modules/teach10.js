@@ -4,21 +4,18 @@ const { Pool } = require("pg");
 const pool = new Pool({ connectionString: connectionString });
 
 exports.getPersons = (req, res) => {
-  let personID = req.query.id;
-  console.log("Looking for id:", personID);
+  console.log("getting person info.");
 
-  const sql =
-    'SELECT first_name, last_name, date_of_birth FROM persons WHERE id=$1::int';
-  const values = [personID];
-  pool.query(sql, values, function(err, result) {
-    if (err) {
-        res.status(500).json({ success: false, data: err, dburl: connectionString });
+  let id = req.query.id;
+  console.log("Looking for id:", id);
+
+  getPersonFromDb(id, function(error, result) {
+    if (error || result == null || result.length != 1) {
+      res.status(500).json({ success: false, data: error });
+    } else {
+      console.log("Back from the database with result:", result);
+      res.json(result);
     }
-    //  let person = result.rows;
-
-    console.log("Found DB result: " + JSON.stringify(result.rows));
-
-    res.json(result.rows);
   });
 };
 
@@ -57,3 +54,20 @@ exports.getParents = (req, response) => {
     response.end(text);
   });
 };
+
+function getPersonFromDb(id, callback) {
+  console.log("getPersonFromDB called with id:", id);
+
+  let sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
+  let params = [id];
+
+  pool.query(sql, params, function(err, result) {
+    if (err) {
+      console.log("error:", err);
+      callback(err, null);
+    }
+
+    console.log("Found DB result: " + JSON.stringify(result.rows));
+    callback(null, result.rows);
+  });
+}
