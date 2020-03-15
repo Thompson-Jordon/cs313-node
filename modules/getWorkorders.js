@@ -67,7 +67,6 @@ exports.getWoJSON = callback => {
       });
       text += `</tbody></table></div></div></div>`;
     }
-    text.trim();
     callback(text);
   });
 };
